@@ -109,6 +109,12 @@ public class WidgetsUtilRLingual
 	}
 
 	private String getWidgetText_NiceBr_CharImages(Widget widget, String text){
+		// a widget that is only one line tall (eg. rows of the quest list) can't show a second line,
+		// so a <br> would only make the text overlap the widgets below it
+		int lineHeight = Math.max(widget.getLineHeight(), plugin.getConfig().getSelectedLanguage().getCharHeight());
+		if (widget.getHeight() < lineHeight * 2) {
+			return text;
+		}
 		// Set the text of the widget, but insert br considering the width of the widget
 		int widgetWidth = widget.getWidth();
 		int foreignWidth = plugin.getConfig().getSelectedLanguage().getCharWidth();
